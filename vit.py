@@ -27,7 +27,10 @@ if __name__ == "__main__":
     print(args)
 
     latent_vec_dim = args.latent_vec_dim
+    
+    ## 마지막단의 히든레이어는 레이턴트백터 /2로 임의로 정함
     mlp_hidden_dim = int(latent_vec_dim/2)
+    
     num_patches = int((args.img_size * args.img_size) / (args.patch_size * args.patch_size))
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -66,7 +69,7 @@ if __name__ == "__main__":
                 loss.backward()
                 optimizer.step()
                 running_loss += loss.item()
-                #scheduler.step()
+                #scheduler.step() 
 
             train_loss = running_loss / n
             val_acc, val_loss = test.accuracy(valloader, vit)
