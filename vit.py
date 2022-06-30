@@ -37,6 +37,7 @@ if __name__ == "__main__":
     trainloader, valloader, testloader = d.patchdata()
     image_patches, _ = iter(trainloader).next()
 
+    
     # Model
     vit = model.VisionTransformer(patch_vec_size=image_patches.size(2), num_patches=image_patches.size(1),
                                   latent_vec_dim=latent_vec_dim, num_heads=args.num_heads, mlp_hidden_dim=mlp_hidden_dim,

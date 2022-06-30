@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 
+
+## 이미지 패치를 임베딩
 class LinearProjection(nn.Module):
 
     def __init__(self, patch_vec_size, num_patches, latent_vec_dim, drop_rate):
@@ -70,8 +72,17 @@ class TFencoderLayer(nn.Module):
 class VisionTransformer(nn.Module):
     def __init__(self, patch_vec_size, num_patches, latent_vec_dim, num_heads, mlp_hidden_dim, drop_rate, num_layers, num_classes):
         super().__init__()
+        # print("패치벡터 사이즈",patch_vec_size,"\n")
+        # print("패치 갯수",num_patches,"\n")
+        # print("레이턴트 벡터 디멘젼",latent_vec_dim,"\n")
+        # 패치벡터 사이즈 48 
+        # 패치 갯수 64 
+        # 레이턴트 벡터 디멘젼 128 
+
+        
         self.patchembedding = LinearProjection(patch_vec_size=patch_vec_size, num_patches=num_patches,
                                                latent_vec_dim=latent_vec_dim, drop_rate=drop_rate)
+        
         self.transformer = nn.ModuleList([TFencoderLayer(latent_vec_dim=latent_vec_dim, num_heads=num_heads,
                                                          mlp_hidden_dim=mlp_hidden_dim, drop_rate=drop_rate)
                                           for _ in range(num_layers)])
@@ -80,10 +91,23 @@ class VisionTransformer(nn.Module):
 
     def forward(self, x):
         att_list = []
+        
+        ## 지워도됨
+        ori_x = x
+        
+        
+        
         x = self.patchembedding(x)
+        
+        
+        ## 지워도 됨
+        position_x = x
+        
+        
+        
         for layer in self.transformer:
             x, att = layer(x)
             att_list.append(att)
         x = self.mlp_head(x[:,0])
 
-        return x, att_list
+        return x, att_list,ori_x,position_x
