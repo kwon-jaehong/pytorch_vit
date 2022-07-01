@@ -134,10 +134,16 @@ class Attention(nn.Module):
             raise ValueError
         
 
+        k = self.key(x)
+        # torch.Size([512, 65, 128])
+
+
         ## qkv를 한꺼번에 계산 -> 리쉐이프
         qkv = self.qkv(x) # (배치,패치+1,3*dim)
 
-                
+
+        
+               
 
         qkv = qkv.reshape(n_samples,n_tokens,3,self.n_heads,self.head_dim) # (배치,패치수+1,3,해더수,해더 차원)
         qkv = qkv.permute(2,0,3,1,4) # (3,배치,해더수,패치수+1,해더 차원)
@@ -147,6 +153,8 @@ class Attention(nn.Module):
         
         ## 쿼리,키,벨류 값 가져오기
         q,k,v = qkv[0],qkv[1],qkv[2]
+        # torch.Size([512, 8, 65, 16])
+        
         
         ## 키값 ??? 
         k_t = k.transpose(-2,-1) # (배치,해더수,해더차원,패치수+1)
