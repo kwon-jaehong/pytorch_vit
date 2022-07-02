@@ -138,32 +138,32 @@ class Attention(nn.Module):
         # torch.Size([512, 65, 128])
 
 
-        ## qkv를 한꺼번에 계산 -> 리쉐이프
-        qkv = self.qkv(x) # (배치,패치+1,3*dim)
-
+        ## qkv를 한꺼번에 계산 
+        qkv = self.qkv(x) # 입력 : (배치,패치수+1,임베딩 차원)          출력 : (배치,패치+1,3*임베딩 차원)
+        # torch.Size([512, 65, 384])
 
         
                
-
+        # -> 리쉐이프
         qkv = qkv.reshape(n_samples,n_tokens,3,self.n_heads,self.head_dim) # (배치,패치수+1,3,해더수,해더 차원)
-        qkv = qkv.permute(2,0,3,1,4) # (3,배치,해더수,패치수+1,해더 차원)
-        
-        
+        qkv = qkv.permute(2,0,3,1,4) # (3,배치,해더수,패치수+1,해더 차원)        
         
         
         ## 쿼리,키,벨류 값 가져오기
         q,k,v = qkv[0],qkv[1],qkv[2]
-        # torch.Size([512, 8, 65, 16])
+
         
         
-        ## 키값 ??? 
+        ## 키값 전치행렬
         k_t = k.transpose(-2,-1) # (배치,해더수,해더차원,패치수+1)
+        # k_t = torch.Size([512, 8, 16, 65])
+        # k  = torch.Size([512, 8, 65, 16])
         
         ## 두행렬을 곱하고 스케일 조정
         dp = (q@k_t) * self.scale # (배치,해더수,패치수+1,패치수+1)
-        
-        
         ## 어텐션 맵 만듬 (소프트 맥스 & 드롭아웃)
+        # dp = torch.Size([512, 8, 65, 65])
+        ## 쿼리와 키의 전치행렬을 곱해줌으로써 
         attn = dp.softmax(dim=-1)
         attn = self.attn_drop(attn)
         
