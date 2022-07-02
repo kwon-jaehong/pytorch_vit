@@ -123,6 +123,8 @@ class Attention(nn.Module):
             모양 '(배치,패치수+1,dim)'
         
         """
+        # https://paperswithcode.com/method/multi-head-attention 그림 참조할것
+        
         
         ## 배치수, 패치수, x의 차원
         ## 여기서 패치수는 임베딩된 벡터라 하나의 토큰으로 보아도 무방함
@@ -134,24 +136,34 @@ class Attention(nn.Module):
             raise ValueError
         
 
-        k = self.key(x)
-        # torch.Size([512, 65, 128])
+        
+        
+        ################ 지우자
+        # q = self.query(x)
+        # # q = torch.Size([512, 65, 128])        
+        # q = q.view(batch_size, -1, self.n_heads, self.head_dim).permute(0,2,1,3)
+        # # q = torch.Size([512, 8, 65, 16])
+        ################
+        
+        
 
 
         ## qkv를 한꺼번에 계산 
         qkv = self.qkv(x) # 입력 : (배치,패치수+1,임베딩 차원)          출력 : (배치,패치+1,3*임베딩 차원)
-        # torch.Size([512, 65, 384])
-
-        
-               
-        # -> 리쉐이프
+        # qkv = torch.Size([512, 65, 384])
+                       
+        # 한꺼번에 계산한거-> 리쉐이프
+        ## -> 여기에는 키,쿼리 벨류를 해더로 나누어줌
         qkv = qkv.reshape(n_samples,n_tokens,3,self.n_heads,self.head_dim) # (배치,패치수+1,3,해더수,해더 차원)
+        ## 헤더별로 가져오기 편하게 차원 바꾸어줌
+        ## 3을 맨앞으로...
         qkv = qkv.permute(2,0,3,1,4) # (3,배치,해더수,패치수+1,해더 차원)        
         
         
         ## 쿼리,키,벨류 값 가져오기
         q,k,v = qkv[0],qkv[1],qkv[2]
-
+        # q= torch.Size([512, 8, 65, 16])
+        # 배치,헤더수,패치수, 헤더 차원수
         
         
         ## 키값 전치행렬
@@ -159,24 +171,33 @@ class Attention(nn.Module):
         # k_t = torch.Size([512, 8, 16, 65])
         # k  = torch.Size([512, 8, 65, 16])
         
-        ## 두행렬을 곱하고 스케일 조정
+        
+        
+        ## 쿼리,키 행렬을 곱하고 스케일 조정
         dp = (q@k_t) * self.scale # (배치,해더수,패치수+1,패치수+1)
         ## 어텐션 맵 만듬 (소프트 맥스 & 드롭아웃)
         # dp = torch.Size([512, 8, 65, 65])
-        ## 쿼리와 키의 전치행렬을 곱해줌으로써 
         attn = dp.softmax(dim=-1)
         attn = self.attn_drop(attn)
         
         
+        
+        ## V를 어텐션 스코어 값으로 곱함
+        # weighted_avg = torch.Size([512, 8, 65, 16])
         weighted_avg = attn @ v # (배치,해더수,패치수+1,해더차원)
+        
+        # weighted_avg = torch.Size([512, 65, 8, 16])
         weighted_avg = weighted_avg.transpose(1,2) # (배치,패치수+1,해더수,해더차원)
-        weighted_avg = weighted_avg.flatten(2) # (배치,패치수+1,)
+        
+        ## 해더수(행)만큼 나누어진 값들을 일자로 펴줌-> concat의 의미도 있음
+        weighted_avg = weighted_avg.flatten(2) # (배치,패치수+1,헤더수*헤더차원) => (배치,패치수+1,임베딩 차원)
+        # weighted_avg = torch.Size([512, 65, 128])
         
         x = self.proj(weighted_avg)
         x = self.proj_drop(x)
         
         
-        return x
+        return x,q,k,v
         
 class MLP(nn.Module):
     """ 멀티 레이어
@@ -250,10 +271,11 @@ class Block(nn.Module):
         )
         
     def forward(self,x):
-        x = x + self.attn(self.norm1(x))
+        z,q,k,v = self.attn(self.norm1(x))
+        x = x + z
         x = x + self.mlp(self.norm2(x))
         
-        return x
+        return x , q,k,v
         
           
 class Vit(nn.Module):
@@ -318,14 +340,15 @@ class Vit(nn.Module):
         x = self.pos_drop(x)
         
         for block in self.blocks:
-            x = block(x)
+            x,q,k,v = block(x) 
+            # x = block(x)
         
         x = self.norm(x)
         
         cls_token_final = x[:,0] # vit 마지막 결과값 가져옴
         x = self.head(cls_token_final)
         
-        return x  
+        return x ,q,k,v
     
     ## 데이터 로더
 import torchvision
@@ -380,7 +403,7 @@ for epoch in range(0,epochs):
     for i,(img,target) in enumerate(trainloader):
         optimizer.zero_grad() # model의 gradient 값을 0으로 설정
         
-        outputs = model(img.to(device))
+        outputs , q,k,v = model(img.to(device))
         
         
         loss = criterion(outputs, target.to(device))

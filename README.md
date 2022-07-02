@@ -15,6 +15,9 @@ vit 리뷰
 https://hipgyung.tistory.com/entry/%EC%89%BD%EA%B2%8C-%EC%9D%B4%ED%95%B4%ED%95%98%EB%8A%94-ViTVision-Transformer-%EB%85%BC%EB%AC%B8-%EB%A6%AC%EB%B7%B0-An-Image-is-Worth-16x16-Words-Transformers-for-Image-Recognition-at-Scale
 
 
+키,쿼리,밸류 
+설명 https://github.com/eubinecto/k4ji_ai/issues/42
+
 어텐션 맵
 https://hongl.tistory.com/234
 https://github.com/lukemelas/PyTorch-Pretrained-ViT/issues/19
