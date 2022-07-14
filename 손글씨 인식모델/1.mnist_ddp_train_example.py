@@ -12,8 +12,6 @@ import torch.distributed as dist
 import torchvision
 import os
 
-# os.environ["CUDA_VISIBLE_DEVICES"] = "6,7,8,9"
-
 
 def setup(rank, world_size):
     os.environ['MASTER_ADDR'] = 'localhost'
