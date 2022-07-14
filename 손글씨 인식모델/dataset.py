@@ -72,13 +72,13 @@ class Hanguldataset(Dataset):
         img = img.resize(size, 2)
         return img
     
-def main():
-    img_size = 32
+# def main():
+#     img_size = 32
 
-    train_transform = transforms.Compose([transforms.Resize((img_size,img_size)),transforms.RandomRotation(25), transforms.ToTensor()])
+#     train_transform = transforms.Compose([transforms.Resize((img_size,img_size)),transforms.RandomRotation(25), transforms.ToTensor()])
 
-    dataset = Hanguldataset(g_target_char_txt="../data/target.txt",ttf_dir="../data/ttf_file",transform=train_transform)
-    # print(dataset.__len__())
-    print(dataset.__getitem__(7049))
-if __name__ == '__main__':
-    main()
+#     dataset = Hanguldataset(g_target_char_txt="../data/target.txt",ttf_dir="../data/ttf_file",transform=train_transform)
+#     # print(dataset.__len__())
+#     print(dataset.__getitem__(7049))
+# if __name__ == '__main__':
+#     main()

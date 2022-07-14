@@ -174,11 +174,11 @@ def demo_basic(rank, world_size, args, use_cuda):
 
     optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
 
-    scheduler = StepLR(optimizer, step_size=1, gamma=args.gamma)
+    # scheduler = StepLR(optimizer, step_size=1, gamma=args.gamma)
     for epoch in range(1, args.epochs + 1):
         train(args, model, device, train_loader, optimizer, epoch, rank)
         test(model, device, test_loader, rank)
-        scheduler.step()
+        # scheduler.step()
 
     cleanup()
 
