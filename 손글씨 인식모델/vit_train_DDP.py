@@ -86,7 +86,6 @@ def trainer(rank, world_size, args):
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-
     train_transform = transforms.Compose([transforms.Resize((args.image_size,args.image_size)),transforms.RandomRotation(25), transforms.ToTensor()])
     train_dataset = Hanguldataset(g_target_char_txt=args.target_char_txt,ttf_dir=args.train_ttf_dir,transform=train_transform)
   
