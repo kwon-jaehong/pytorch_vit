@@ -12,7 +12,7 @@ import torch.distributed as dist
 import os
 
 from dataset import Hanguldataset
-from model import Vit
+from resnet import ResNet50
 
 
 
@@ -104,12 +104,12 @@ def trainer(rank, world_size, args):
         sampler=test_sampler)
     
     
-    model = Vit(img_size=args.image_size,patch_size=16,in_chans=1,n_classes=2350,embed_dim=768,n_heads=12,depth=12).to(rank)
+    model = ResNet50(img_channel=1,num_classes=2350).to(rank)
 
     model = DDP(model, device_ids=[rank])
     
 
-    optimizer = optim.Adadelta(model.parameters(), lr=args.lr,weight_decay=0.01)
+    optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
     
     criterion = torch.nn.CrossEntropyLoss().to(rank)
 
@@ -125,7 +125,7 @@ def trainer(rank, world_size, args):
 def main():
     # Training settings
     parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
-    parser.add_argument('--batch-size', type=int, default=16, metavar='N',
+    parser.add_argument('--batch-size', type=int, default=128, metavar='N',
                         help='input batch size for training (default: 128)')
     
     parser.add_argument('--test-batch-size', type=int, default=128, metavar='N',

@@ -43,6 +43,7 @@ class Hanguldataset(Dataset):
         top = nz[:,0,1].max()
         img = img[bottom:top,left:right]
         ## 크롭끝
+        
 
         img = Image.fromarray(img)
         
