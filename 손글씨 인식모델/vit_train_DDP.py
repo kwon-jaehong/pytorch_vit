@@ -109,7 +109,8 @@ def trainer(rank, world_size, args):
     model = DDP(model, device_ids=[rank])
     
 
-    optimizer = optim.Adadelta(model.parameters(), lr=args.lr,weight_decay=0.01)
+    optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
+    # optimizer = optim.NAdam(model.parameters(),  lr=args.lr)
     
     criterion = torch.nn.CrossEntropyLoss().to(rank)
 
