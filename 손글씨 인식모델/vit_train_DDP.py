@@ -106,11 +106,13 @@ def trainer(rank, world_size, args):
     
     model = Vit(img_size=args.image_size,patch_size=16,in_chans=1,n_classes=2350,embed_dim=768,n_heads=12,depth=12).to(rank)
 
+
+
     model = DDP(model, device_ids=[rank])
     
 
     optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
-    # optimizer = optim.NAdam(model.parameters(),  lr=args.lr)
+    # optimizer = optim.Adam(model.parameters(),  lr=args.lr)
     
     criterion = torch.nn.CrossEntropyLoss().to(rank)
 
@@ -149,11 +151,11 @@ def main():
                         help='how many batches to wait before logging training status')
     parser.add_argument('--save-model', action='store_true', default=False,
                         help='For Saving the current Model')
-    parser.add_argument('--train_ttf_dir', default="../data/ttf_file",
+    parser.add_argument('--train_ttf_dir', default="./data/ttf_file",
                         help='train ttf file dir')
-    parser.add_argument('--val_ttf_dir', default="../data/ttf_file",
+    parser.add_argument('--val_ttf_dir', default="./data/ttf_file",
                         help='val ttf file dir')
-    parser.add_argument('--target_char_txt', default="../data/target.txt",
+    parser.add_argument('--target_char_txt', default="./data/target.txt",
                         help='val ttf file dir')
     
     args = parser.parse_args()

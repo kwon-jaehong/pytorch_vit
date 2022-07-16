@@ -287,7 +287,8 @@ class Vit(nn.Module):
         
         self.norm = nn.LayerNorm(embed_dim,eps=1e-6)
         self.head = nn.Linear(embed_dim,n_classes)
-    
+        # self.initialize_weights()
+         
     def forward(self,x):
         ## 배치수
         n_samples = x.shape[0]
