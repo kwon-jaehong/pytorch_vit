@@ -113,6 +113,7 @@ def trainer(rank, world_size, args):
 
     optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
     # optimizer = optim.Adam(model.parameters(),  lr=args.lr)
+    ## 아담으로 900에폭 돌려도 loss가 수렴이 안됨
     
     criterion = torch.nn.CrossEntropyLoss().to(rank)
 
