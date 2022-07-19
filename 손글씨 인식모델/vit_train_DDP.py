@@ -13,7 +13,7 @@ import os
 from torchsummary import summary
 from dataset import Hanguldataset
 from model import Vit
-
+from pytorch_transformers.optimization import WarmupCosineSchedule
 
 
 
@@ -28,8 +28,10 @@ def cleanup():
     dist.destroy_process_group()
 
 
-def train(args, model, device, train_loader, optimizer, epoch, rank,criterion):
+def train(args, model, device, train_loader, optimizer, epoch, rank,criterion,scheduler):
+    
 
+    
     model.train()
     running_loss = 0
     total_correct = 0
@@ -60,8 +62,9 @@ def train(args, model, device, train_loader, optimizer, epoch, rank,criterion):
             print(f'[{len(train_loader)}/{i}] step loss : {loss:.4f} \t accuracy : {correct/args.batch_size*100:.2f}% \t{correct}/{args.batch_size}')    
     
     if(rank == 0):
-        print(f"{epoch} epoch train loss : {running_loss:.4f} \t accuracy : {total_correct/(args.batch_size*len(train_loader))*100:.2f}% \t {total_correct}/{args.batch_size*len(train_loader)}")
+        print(f"{epoch} epoch train loss : {running_loss:.4f} \t accuracy : {total_correct/(args.batch_size*len(train_loader))*100:.2f}% \t {total_correct}/{args.batch_size*len(train_loader)} LR : {scheduler.get_last_lr()[0]}")
         print("\n")
+    scheduler.step()
 
     
 def trainer(rank, world_size, args):
@@ -111,14 +114,17 @@ def trainer(rank, world_size, args):
     model = DDP(model, device_ids=[rank])
     
 
-    optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
-    # optimizer = optim.Adam(model.parameters(),  lr=args.lr)
-    ## 아담으로 900에폭 돌려도 loss가 수렴이 안됨
+    # optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
+    optimizer = optim.Adam(model.parameters())
+    ## 아담으로 lr 0.001  900에폭 돌려도 loss가 수렴이 안됨
+    ## vit는 lr을 매우 작게 돌려야한다
+    
+    scheduler = WarmupCosineSchedule(optimizer, args.epochs // 5, args.epochs)
     
     criterion = torch.nn.CrossEntropyLoss().to(rank)
 
     for epoch in range(1, args.epochs + 1):
-        train(args, model, device, train_loader, optimizer, epoch, rank,criterion)
+        train(args, model, device, train_loader, optimizer, epoch, rank,criterion,scheduler)
     #     scheduler.step()
 
     cleanup()
