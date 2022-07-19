@@ -5,3 +5,4 @@ data/
 *.onnx*
 *.zip*
 .vscode
+*.pt*

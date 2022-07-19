@@ -13,7 +13,7 @@ import os
 
 from dataset import Hanguldataset
 from resnet import ResNet50
-
+from torchsummary import summary
 
 
 
@@ -57,6 +57,7 @@ for epoch in range(0,100):
         
         img = img.to(device)
         target = target.to(device)
+        
         
         outputs = model(img)
         

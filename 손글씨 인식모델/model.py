@@ -311,3 +311,4 @@ class Vit(nn.Module):
         x = self.head(cls_token_final)
         
         return x  
+

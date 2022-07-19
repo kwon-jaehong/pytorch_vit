@@ -13,6 +13,7 @@ import os
 from model import Vit
 from dataset import Hanguldataset
 import torchvision
+from torchsummary import summary
 
 
 
@@ -24,7 +25,9 @@ def train(args, model, device, train_loader, optimizer, epoch):
     for i,(img,target) in enumerate(train_loader):
         optimizer.zero_grad() # model의 gradient 값을 0으로 설정
         
+        # summary(model,(1,64,64))
         outputs = model(img.to(device))
+        
         
         
         loss = criterion(outputs, target.to(device))
@@ -157,11 +160,11 @@ def main():
                         help='how many batches to wait before logging training status')
     parser.add_argument('--save-model', action='store_true', default=False,
                         help='For Saving the current Model')
-    parser.add_argument('--train_ttf_dir', default="../data/ttf_file",
+    parser.add_argument('--train_ttf_dir', default="./data/ttf_file",
                         help='train ttf file dir')
-    parser.add_argument('--val_ttf_dir', default="../data/ttf_file",
+    parser.add_argument('--val_ttf_dir', default="./data/ttf_file",
                         help='val ttf file dir')
-    parser.add_argument('--target_char_txt', default="../data/target.txt",
+    parser.add_argument('--target_char_txt', default="./data/target.txt",
                         help='val ttf file dir')
     
     args = parser.parse_args()

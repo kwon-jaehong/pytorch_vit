@@ -9,3 +9,16 @@ https://kmhana.tistory.com/27
 
 
 mnist DDP 
+
+
+
+
+
+
+
+
+
+
+
+
+

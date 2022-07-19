@@ -10,7 +10,7 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 import torch.multiprocessing as mp
 import torch.distributed as dist
 import os
-
+from torchsummary import summary
 from dataset import Hanguldataset
 from model import Vit
 
