@@ -28,7 +28,8 @@ def cleanup():
     dist.destroy_process_group()
 
 
-def train(args, model, device, train_loader, optimizer, epoch, rank,criterion,scheduler):
+# def train(args, model, device, train_loader, optimizer, epoch, rank,criterion,scheduler):
+def train(args, model, device, train_loader, optimizer, epoch, rank,criterion):
     
 
     
@@ -62,9 +63,13 @@ def train(args, model, device, train_loader, optimizer, epoch, rank,criterion,sc
             print(f'[{len(train_loader)}/{i}] step loss : {loss:.4f} \t accuracy : {correct/args.batch_size*100:.2f}% \t{correct}/{args.batch_size}')    
     
     if(rank == 0):
-        print(f"{epoch} epoch train loss : {running_loss:.4f} \t accuracy : {total_correct/(args.batch_size*len(train_loader))*100:.2f}% \t {total_correct}/{args.batch_size*len(train_loader)} LR : {scheduler.get_last_lr()[0]}")
+        # print(f"{epoch} epoch train loss : {running_loss:.4f} \t accuracy : {total_correct/(args.batch_size*len(train_loader))*100:.2f}% \t {total_correct}/{args.batch_size*len(train_loader)} LR : {scheduler.get_last_lr()[0]}")
+        print(f"{epoch} epoch train loss : {running_loss:.4f} \t accuracy : {total_correct/(args.batch_size*len(train_loader))*100:.2f}% \t {total_correct}/{args.batch_size*len(train_loader)}")
         print("\n")
-    scheduler.step()
+        for param_group in optimizer.param_groups:
+            print("LR : ",param_group['lr'])
+        torch.save(model.module.state_dict(), './vit.pt')
+    # scheduler.step()
 
     
 def trainer(rank, world_size, args):
@@ -114,17 +119,21 @@ def trainer(rank, world_size, args):
     model = DDP(model, device_ids=[rank])
     
 
-    # optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
-    optimizer = optim.Adam(model.parameters())
+    optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
+    # optimizer = optim.Adam(model.parameters())
     ## 아담으로 lr 0.001  900에폭 돌려도 loss가 수렴이 안됨
     ## vit는 lr을 매우 작게 돌려야한다
     
-    scheduler = WarmupCosineSchedule(optimizer, args.epochs // 5, args.epochs)
+    # 코사인 러닝레이트 https://gaussian37.github.io/dl-pytorch-lr_scheduler/
+    # scheduler = WarmupCosineSchedule(optimizer, args.epochs // 5, args.epochs)
+    
     
     criterion = torch.nn.CrossEntropyLoss().to(rank)
 
     for epoch in range(1, args.epochs + 1):
-        train(args, model, device, train_loader, optimizer, epoch, rank,criterion,scheduler)
+        # train(args, model, device, train_loader, optimizer, epoch, rank,criterion,scheduler)
+        train(args, model, device, train_loader, optimizer, epoch, rank,criterion)
+        
     #     scheduler.step()
 
     cleanup()

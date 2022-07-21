@@ -140,7 +140,7 @@ class Attention(nn.Module):
         ## 쿼리,키,벨류 값 가져오기
         q,k,v = qkv[0],qkv[1],qkv[2]
         
-        ## 키값 ??? 
+        ## 키값 전치
         k_t = k.transpose(-2,-1) # (배치,해더수,해더차원,패치수+1)
         
         ## 두행렬을 곱하고 스케일 조정
@@ -292,9 +292,10 @@ class Vit(nn.Module):
     def forward(self,x):
         ## 배치수
         n_samples = x.shape[0]
-        x = self.patch_embed(x)
+        x = self.patch_embed(x) #
         
         cls_token = self.cls_token.expand(n_samples,-1,-1) # (배치,1,임베드차원)
+        
         
         ## cls 토큰을 붙임
         x = torch.cat((cls_token,x),dim=1)

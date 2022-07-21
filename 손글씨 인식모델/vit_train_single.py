@@ -46,6 +46,7 @@ def train(args, model, device, train_loader, optimizer, epoch):
 
     print(f"{epoch} epoch 평균 train loss : {running_loss} \t accuracy : {total_correct/(args.batch_size*len(train_loader))*100:.2f}% \t {total_correct}/{args.batch_size*len(train_loader)}")
     print("\n")
+    torch.save(model.state_dict(), './vit_s1.pt')
     
 
 
@@ -124,17 +125,23 @@ def trainer(args):
     # train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size)
     # test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False)
 
-    
-    model = Vit(img_size=args.image_size,patch_size=4,in_chans=1,n_classes=2350,embed_dim=1024,n_heads=8,depth=8)
+
+    model = Vit(img_size=args.image_size,patch_size=16,in_chans=1,n_classes=2350,embed_dim=768,n_heads=12,depth=12)
+    # model = Vit(img_size=args.image_size,patch_size=16,in_chans=1,n_classes=2350,embed_dim=768,n_heads=8,depth=8)
     # model = Vit(img_size=args.image_size,patch_size=4,in_chans=3,n_classes=10,embed_dim=128,n_heads=8,depth=8)
+    model.load_state_dict(torch.load('./vit_s.pt'))
     model = model.to(device)
     
+    
+    
 
-    optimizer = optim.Adam(model.parameters(), lr=args.lr,weight_decay=0)
+    # optimizer = optim.Adam(model.parameters(), lr=args.lr)
+    optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
+    
 
     for epoch in range(1, args.epochs + 1):
         train(args, model, device, train_loader, optimizer, epoch)
-        test(model,device,test_loader)
+        # test(model,device,test_loader)
 
 
     
@@ -142,16 +149,16 @@ def trainer(args):
 def main():
     # Training settings
     parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
-    parser.add_argument('--batch-size', type=int, default=64, metavar='N',
+    parser.add_argument('--batch-size', type=int, default=8, metavar='N',
                         help='input batch size for training (default: 64)')
     parser.add_argument('--test-batch-size', type=int, default=64, metavar='N',
                         help='input batch size for testing (default: 1000)')
-    parser.add_argument('--image_size', type=int, default=64, metavar='N',
+    parser.add_argument('--image_size', type=int, default=128, metavar='N',
                         help='input image size for training (default: 64)')
     parser.add_argument('--epochs', type=int, default=1000, metavar='N',
                         help='number of epochs to train (default: 200)')
     parser.add_argument('--lr', type=float, default=0.001, metavar='LR',
-                        help='learning rate (default: 0.001)')
+                        help='learning rate (default: 0.0003)')
     parser.add_argument('--gpus', type=int, default=2, metavar='N',
                         help='Number of GPUs')
     parser.add_argument('--seed', type=int, default=1, metavar='S',

@@ -28,3 +28,13 @@ https://hipgyung.tistory.com/entry/%EC%89%BD%EA%B2%8C-%EC%9D%B4%ED%95%B4%ED%95%9
 https://hongl.tistory.com/234
 https://github.com/lukemelas/PyTorch-Pretrained-ViT/issues/19
 https://github.com/jeonsworld/ViT-pytorch/blob/main/visualize_attention_map.ipynb
+
+
+VIT 에서 컨볼루션
+https://velog.io/@sjinu/%EB%85%BC%EB%AC%B8%EB%A6%AC%EB%B7%B0-ON-THE-RELATIONSHIP-BETWEEN-SELF-ATTENTIONAND-CONVOLUTIONAL-LAYERS
+https://arxiv.org/pdf/1911.03584.pdf
+
+
+VIT 필터
+https://www.youtube.com/watch?v=bgsYOGhpxDc
+
