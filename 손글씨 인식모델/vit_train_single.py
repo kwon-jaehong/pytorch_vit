@@ -46,7 +46,7 @@ def train(args, model, device, train_loader, optimizer, epoch):
 
     print(f"{epoch} epoch 평균 train loss : {running_loss} \t accuracy : {total_correct/(args.batch_size*len(train_loader))*100:.2f}% \t {total_correct}/{args.batch_size*len(train_loader)}")
     print("\n")
-    torch.save(model.state_dict(), './vit_s1.pt')
+    torch.save(model.state_dict(), './vit_s4.pt')
     
 
 
@@ -129,7 +129,7 @@ def trainer(args):
     model = Vit(img_size=args.image_size,patch_size=16,in_chans=1,n_classes=2350,embed_dim=768,n_heads=12,depth=12)
     # model = Vit(img_size=args.image_size,patch_size=16,in_chans=1,n_classes=2350,embed_dim=768,n_heads=8,depth=8)
     # model = Vit(img_size=args.image_size,patch_size=4,in_chans=3,n_classes=10,embed_dim=128,n_heads=8,depth=8)
-    model.load_state_dict(torch.load('./vit_s.pt'))
+    model.load_state_dict(torch.load('./vit_s3.pt'))
     model = model.to(device)
     
     
@@ -158,7 +158,7 @@ def main():
     parser.add_argument('--epochs', type=int, default=1000, metavar='N',
                         help='number of epochs to train (default: 200)')
     parser.add_argument('--lr', type=float, default=0.001, metavar='LR',
-                        help='learning rate (default: 0.0003)')
+                        help='learning rate (default: 0.001)')
     parser.add_argument('--gpus', type=int, default=2, metavar='N',
                         help='Number of GPUs')
     parser.add_argument('--seed', type=int, default=1, metavar='S',
