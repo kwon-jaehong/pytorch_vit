@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import argparse
 import torch
 import torch.nn as nn
@@ -13,7 +13,7 @@ import os
 from torchsummary import summary
 from dataset import Hanguldataset
 from model import Vit
-from pytorch_transformers.optimization import WarmupCosineSchedule
+
 
 
 
