@@ -1,14 +1,29 @@
 # OCR 서비스 관련 문서
 
-AWS 계정 생성 및 엑세스 키, 시크릿 키 발급
-테라폼 설치
-kubectl 설치
-AWS CLI 설치
-
+<br><br><br>
 
 ## 목차
-1. 서비스 인프라 환경
+1. 필요 툴 설치
+2. 서비스 인프라 환경
+
+
+<br><br><br><br><br><br><br>
+
 -------
+## 1.필요 툴 설치
+<br> 
+OCR 서비스 운영을 위해, 사전 준비 작업으로 로컬 환경에 `terraform & aws-cli`를 설치한다.
+
+[테라폼 & aws-cli 설치 및 계정 등록](etc/doc/terraform_aws_install.md)
+
+
+<br><br>
+
+-----
+
+## 2.서비스 인프라 환경
+<br>
+
 `OCR 서비스` 프로젝트는 AWS EKS 기반으로 구축 되었고, 이를 관리하는 도구는 `Terraform`입니다.
 
 테라폼(Terraform)은 인프라스트럭처 자동화 도구입니다. 즉, 클라우드나 온프레미스 환경에서 인프라를 관리하고 프로비저닝하는 일련의 과정을 자동화할 수 있도록 지원합니다.
@@ -18,7 +33,7 @@ AWS CLI 설치
 쉽게말해 `파이썬 처럼` 코드를 작성해서 아마존웹서비스(AWS), 구글 클라우드 플랫폼(GCP), 온프레미스 환경을 `프로비저닝` 할 수 있습니다.
 - **프로비저닝(provisioning)**: 사용자의 요구에 맞게 시스템 자원을 할당, 배치, 배포해 두었다가 필요 시 시스템을 즉시 사용할 수 있는 상태로 미리 준비해 두는 것을 말한다.
 
-<br><br>
+<br>
 
 
 아래는 테라폼에서 aws ec2 인스턴스를 생성하는 예시 코드입니다.
@@ -28,22 +43,33 @@ resource "aws_instance" "example" {
   instance_type = "t2.micro"
 }
 ```
-
-
-[테라폼 설치](etc/image/doc/terraform_install.md)
-
+<br><br>
 
 
 
+Amazon `EKS`는 AWS에서 Kubernetes를 완전히 관리하여 사용자는 자신의 애플리케이션에만 집중할 수 있게 해줍니다. 사용자는 Amazon EKS를 통해 클러스터를 만들고 노드를 추가할 수 있습니다. Amazon EKS는 클러스터와 노드를 관리하며 Kubernetes의 모든 기능을 지원합니다. 또한, Amazon EKS는 AWS 서비스와의 통합을 지원하여 AWS 리소스를 쉽게 사용할 수 있습니다.
 
-AWS EKS (아마존 쿠버네티스 환경)
+<br>
 
-[label](etc/image/doc/terraform_install.md)
-인프라 환경
-l
+즉, `내가 서비스할 컨테이너`만 있으면, 이것들을 자동적으로 리소스 스케쥴 관리, 확장, 자동화된 배포 환경을 제공해주는 컨테이너 오케스트레이션 도구이다.EKS = 아마존 `쿠버네티스`라고 생각 하면 된다
+
+<br>
+
+------------------------
+
+## 3. Terraform 코드 구조
+
+<br>
+
+[테라폼으로 구성한 EKS 구조 설명](etc/doc/terraform_structure.md)
+
+테라폼을 이용한 aws 아키텍쳐 설명 
+EKS에서 설치한 것들 대 설명
+
+각종 소프트웨어 설정들 설명
 
 
-인프라스트럭처Infrastructure as Code, IaC
+
 
 
 
