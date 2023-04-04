@@ -14,6 +14,8 @@
 <br> 
 OCR 서비스 운영을 위해, 사전 준비 작업으로 로컬 환경에 `terraform & aws-cli`를 설치한다.
 
+<br>
+
 [테라폼 & aws-cli 설치 및 계정 등록](etc/doc/terraform_aws_install.md)
 
 
