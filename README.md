@@ -3,9 +3,16 @@
 <br>
 
 ## 목차
-1. 필요 툴 설치
-2. 서비스 인프라 환경
-3. Terraform으로 OCR 서비스 환경 구축
+
+[1. 필요 툴 설치](#1.필요-툴-설치)
+<br>
+
+[2. 서비스 인프라 환경](#2.서비스-인프라-환경)
+<br>
+
+[3. Terraform으로 OCR 서비스 환경 구축](#3.-Terraform으로-OCR-서비스-환경-구축)
+<br>
+
 4. EKS 관리 (선택사항)
 5. Terraform으로 OCR 서비스 삭제
 
@@ -270,7 +277,7 @@ terraform destroy
 <p align="center">
   <img src="etc/image/terraform_e8.png">
 </p>
-<p align="center"> [ Terraform destroy - yes 입력 ] </p>
+<p align="center"> [ yes 입력 ] </p>
 <br><br><br>
 
 
