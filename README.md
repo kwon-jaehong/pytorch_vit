@@ -6,7 +6,7 @@
 
 1. 필요 툴 설치
 2. 서비스 인프라 환경
-## [3. Terraform으로 OCR 서비스 환경 구축](#terraform으로-ocr-서비스-환경-구축)
+3. [Terraform으로 OCR 서비스 환경 구축](#terraform으로-ocr-서비스-환경-구축)
 4. EKS 관리 (선택사항)
 5. Terraform으로 OCR 서비스 삭제
 
@@ -211,7 +211,7 @@ aws eks --region us-east-2 update-kubeconfig --name chunjae_ocr --profile defaul
 <br><br><br><br><br><br><br><br><br><br>
 
 ----
-## 4. EKS 관리 (선택사항)
+## [4. EKS 관리 (선택사항)](#eks-관리-선택사항)
 
 <br><br>
 
