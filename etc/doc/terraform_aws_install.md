@@ -36,7 +36,7 @@ sudo unzip terraform.zip -d /usr/local/bin/
 ```
 terraform version
 ```
-<br><br>
+<br><br><br><br><br><br><br><br>
 
 ---
 
@@ -60,6 +60,8 @@ sudo ./aws/install
 ```
 aws version
 ```
+<br><br><br><br><br><br><br><br><br><br>
+
 ----------
 
 ## 3. aws-cli에 aws 계정 등록
