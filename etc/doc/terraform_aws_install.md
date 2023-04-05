@@ -5,30 +5,27 @@
 
 <br><br>
 
-1.테라폼 설치를 위한 다운로드 링크 확인
+1.먼저, HashiCorp의 GPG(GNU Privacy Guard) 키를 설치합니다. 이는 테라폼 패키지가 검증된 것임을 보장하기 위해 필요합니다. 다음 명령어를 실행합니다
 ```
-# 최신 버전 다운로드 링크 확인
-LATEST_VERSION=$(curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | grep tag_name | cut -d '"' -f 4)
-DOWNLOAD_URL="https://releases.hashicorp.com/terraform/${LATEST_VERSION}/terraform_${LATEST_VERSION}_linux_amd64.zip"
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 ```
 
 <br><br>
 
-2.다운로드 받은 압축 파일을 /usr/local/bin/ 디렉토리에 설치하기 위해 unzip 패키지 설치
+2.HashiCorp 패키지 저장소를 apt에 등록합니다. 다음 명령어를 실행합니다
 ```
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
+## 저장소 업데이트
 sudo apt-get update
-sudo apt-get install -y unzip
+
 ```
 <br><br>
 
 
-3.다운로드 받은 압축 파일 다운로드 및 압축 해제
+3.테라폼을 설치합니다. 다음 명령어를 실행합니다.
 ```
-# 다운로드
-wget $DOWNLOAD_URL -O terraform.zip
-
-# 압축 해제
-sudo unzip terraform.zip -d /usr/local/bin/
+sudo apt-get install terraform
 ```
 
 <br><br>

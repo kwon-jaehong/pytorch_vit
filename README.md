@@ -5,7 +5,9 @@
 ## 목차
 1. 필요 툴 설치
 2. 서비스 인프라 환경
-
+3. Terraform으로 OCR 서비스 환경 구축
+4. EKS 관리 (선택사항)
+5. Terraform으로 OCR 서비스 삭제
 
 <br><br><br><br><br><br><br>
 
@@ -191,49 +193,104 @@ terraform apply
 
 
 
-
-(선택사항) 쿠버네티스 관리 툴 k9s설치
+테라폼 프로비저닝이 완료되면, 로컬 컴퓨터에 쿠버네티스 config 파일 업데이트를 실시한다
 ```
-curl -LO https://github.com/derailed/k9s/releases/download/v0.24.10/k9s_Linux_x86_64.tar.gz
-tar -xzf k9s_Linux_x86_64.tar.gz
-sudo mv k9s /usr/local/bin/
+## aws eks --region "AWS 지역" update-kubeconfig --name "EKS 이름" --profile default
+
+##예시
+aws eks --region us-east-2 update-kubeconfig --name chunjae_ocr --profile default
+```
+
+<br>
+<p align="center">
+  <img src="etc/image/terraform_e6.png">
+</p>
+<p align="center"> [ 쿠버네티스 config 업데이트 완료 예시 ] </p>
+
+<br><br><br><br><br><br><br><br><br><br>
+
+----
+## 4. EKS 관리 (선택사항)
+
+<br><br>
+
+쿠버네티스 관리 툴 k9s설치
+```
+wget https://github.com/derailed/k9s/releases/download/v0.24.15/k9s_Linux_x86_64.tar.gz  
+tar xzvf ./k9s_Linux_x86_64.tar.gz  
+sudo mv ./k9s /usr/bin  
 
 ## 버전확인
 k9s version
 ```
 
-<br><br><br><br><br>
+<br><br><br>
 
-테라폼 프로비저닝이 완료되면 쿠버네티스 config 파일 업데이트를 실시한다
-
+위의 쿠버네티스 config까지 업데이트를 완료 하였으면, 다음과 같은 명령어로 EKS 환경들을 볼 수 있습니다.
 ```
-## aws eks --region kube update-kubeconfig --name chunjae_ocr --profile default
-
-##예시
-aws eks --region us-east-2 update-kubeconfig --name chunjae_ocr --profile default
+k9s
 ```
 
+<br><br><br>
+<p align="center">
+  <img src="etc/image/k9s_1.png">
+</p>
+<p align="center"> [ k9s UI ] </p>
 
 
+<br>
+
+**EKS를 관리하려면, kubernets(쿠버네티스)관한 지식이 있어야 관리가 가능 합니다.**
+
+<br><br><br><br>
 
 
+-----
 
+## 5. Terraform으로 OCR 서비스 삭제
+
+<br><br>
+
+테라폼으로 프로비저닝된 자원들을 삭제하기위해 다음과 같은 명령어를 입력, `yes`를 입력하면 됩니다.
 ```
-쿠버네티스 config 파일 업데이트
-## aws eks --region kube update-kubeconfig --name chunjae_ocr --profile default
-
-
-##예시
-aws eks --region us-east-2 update-kubeconfig --name chunjae_ocr --profile default
-```
-
-
-
-
-
-다 지우는데도 오래걸림, 오류뜨면 다시 디스트로이 하면됨
-
 terraform destroy
+
+## 자원을 삭제하는 시간 20~40분 소요
+```
+<br><br>
+
+
+<br><br><br>
+<p align="center">
+  <img src="etc/image/terraform_e7.png">
+</p>
+<p align="center"> [ Terraform destroy - 실행 ] </p>
+<br><br><br>
+
+<p align="center">
+  <img src="etc/image/terraform_e8.png">
+</p>
+<p align="center"> [ Terraform destroy - yes 입력 ] </p>
+<br><br><br>
+
+
+<p align="center">
+  <img src="etc/image/terraform_e10.png">
+</p>
+<p align="center"> [ Terraform destroy - 완료 모습 ] </p>
+<br><br><br><br><br><br>
+
+
+
+**혹, 아래 그림처럼 오류가 날 경우 다시 `terraform destroy` 실행**
+<br><br>
+<p align="center">
+  <img src="etc/image/terraform_e9.png">
+</p>
+<p align="center"> [ Terraform destroy - 에러 발생 (삭제 타임아웃 에러) ] </p>
+<br><br><br><br><br><br>
+
+
 
 ------
 
