@@ -1,9 +1,9 @@
 # Terraform 코드 구조
 
-현재 프로젝트 구조 terraform폴더에 관한 설명이며, 내가 테라폼을 사용해서 AWS에 구성하려는 인프라 구성도는 이렇다.
+현재 프로젝트 구조 terraform폴더에 관한 설명이며, 내가 테라폼을 사용해서 AWS에 구성하려는 인프라 구성도는 아래 그림과 같습니다.
 
 <p align="center">
-  <img src="../image/aws_%EA%B5%AC%EC%A1%B0_full.png" width="70%" height="70%">
+  <img src="../image/aws_%EA%B5%AC%EC%A1%B0_full.png">
 </p>
 <p align="center"> [ OCR 서비스 AWS 구조 ] </p>
 
@@ -12,8 +12,9 @@
 
 -------------
 ## tf 파일 설명
-- **!!대부분 tf 파일에 주석을 기입 하였습니다**
-- 현 프로젝트에서 tf 파일을 순차적으로 설명이 진행되며, 넘버링에 따라 이해하기 쉽게 구성도를 삽입하였습니다.
+- **!! 대부분 tf 파일에 주석을 기입 하였습니다**
+- 파일 코드 내용을 보면서 이 문서를 보는것이 좋습니다.
+- 현 프로젝트에서 tf 파일을 순차적 설명이 진행되며, 파일의 넘버링에 따라 이해하기 쉽게 구성도를 삽입하였습니다.
 
 <br><br><br>
 
@@ -34,7 +35,7 @@ provider.tf 파일의 내용은 별거 없습니다. 현재 필요한 provider�
 </p>
 <p align="center"> [ 테라폼을 실행 하였을시 설치 & 다운로드 되는 파일들 ] </p>
 
-현재 작업 폴더 기준으로, `.terraform`폴더가 생기고, aws, helm, kubectl provider들이 설치된다.
+`terraform apply` 진행시, 현재 작업 폴더 기준으로, `.terraform`폴더가 생기고, aws, helm, kubectl provider들이 설치된다.
 <br><br><br><br><br><br><br><br><br><br>
 
 
@@ -100,14 +101,14 @@ AWS NAT 게이트웨이는 VPC 내부의 `private 서브넷`에서 인터넷으�
 이전까지는 VPC, 서브넷, 인터넷게이트웨이, NAT 게이트웨이 까지 만들었지만,** 라우팅 테이블을 설정하지 않으면 해당 서브넷에서 인터넷이나 다른 VPC 내의 리소스와 통신할 수 없습니다.** 라우팅 테이블은 VPC 내부의 네트워크 트래픽을 어디로 보낼지 결정하는 역할을 합니다. 라우팅 테이블을 설정하지 않으면, VPC는 기본 라우팅 테이블을 사용하게 됩니다. 기본 라우팅 테이블은 VPC 내부에서의 트래픽을 다른 서브넷이나 VPC 내부로만 보내고, 인터넷이나 다른 VPC로의 트래픽은 차단합니다. 따라서, `서브넷에서 인터넷이나 다른 VPC와 통신하려면`, 해당 서브넷과 연결된 라우팅 테이블에 인터넷 게이트웨이나 NAT 게이트웨이 등의 대상에 대한 라우팅 규칙을 추가해야 합니다.
 
 **정리**: <br>
-- public subnet에 있는 컴퓨터는 public route 테이블을 통해 인터넷과 통신 할 수 있다
-- private subnet에 있는 컴퓨터는 NAT gateway를 통해 인터넷과 통신 할 수 있다
+- **public subnet에 있는 컴퓨터는 public route 테이블을 통해 인터넷과 통신 할 수 있다**
+- **private subnet에 있는 컴퓨터는 NAT gateway를 통해 인터넷과 통신 할 수 있다**
 
 
 <p align="center">
   <img src="../image/terraform_s5.png">
 </p>
-<p align="center"> [ 현재까지 테라폼으로 구성된 AWS 서비스 아키텍쳐 ] </p>
+<p align="center"> [ 현재까지 테라폼으로 구성된 AWS 서비스 아키텍쳐 (패킷 이동 경로) ] </p>
 <br><br><br><br><br><br><br><br><br><br>
 
 
@@ -115,7 +116,7 @@ AWS NAT 게이트웨이는 VPC 내부의 `private 서브넷`에서 인터넷으�
 <br>
 
 `8-eks.tf`는 EKS 클러스터를 생성하고 구성하는 데 사용됩니다. 쿠버네티스 클러스터를 생성하면, 마스터 노드와 API 서버를 시작하고 AWS 리소스와 Kubernetes 객체의 상호 작용을 관리하는 Kubernetes 컨트롤 플레인이 설정됩니다.
-<br>
+<br><br>
 `9-eks-node-groups.tf`는 EKS 클러스터에서 사용할 EC2 인스턴스 그룹을 정의합니다. 이 리소스를 사용하여 EKS 클러스터에 노드 그룹을 추가하면, 그룹 내에 인스턴스를 시작하고 적절한 권한으로 구성하며, Kubernetes와의 통신을 위한 노드 그룹을 등록합니다.
 
 <br><br>
