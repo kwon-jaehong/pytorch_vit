@@ -2,15 +2,20 @@
 
 <br>
 
-# 목차
+## 목차
 
-1. 필요 툴 설치
-2. 서비스 인프라 환경
-3. [Terraform으로 OCR 서비스 환경 구축](#terraform으로-ocr-서비스-환경-구축)
-4. EKS 관리 (선택사항)
-5. Terraform으로 OCR 서비스 삭제
+## 1. 필요 툴 설치
+## 2. 서비스 인프라 환경
+## 3. Terraform으로 OCR 서비스 환경 구축
+## 4. EKS 관리 (선택사항)
+## 5. 쿠버네티스 애플리케이션 설명
+## 6. Terraform으로 OCR 서비스 삭제
 
-<br><br><br><br><br><br><br>
+<br><br><br><br>
+
+
+
+
 
 -------
 ## 1.필요 툴 설치
@@ -25,6 +30,16 @@ OCR 서비스 운영을 위해, 사전 준비 작업으로 로컬 환경에 `ter
 
 
 <br><br>
+
+
+
+
+
+
+
+
+
+
 
 -----
 
@@ -64,15 +79,18 @@ Amazon `EKS`는 AWS에서 Kubernetes를 완전히 관리하여 사용자는 자�
 
 ------------------------
 
-## 3. Terraform으로 OCR 서비스 환경 구축
+## 3.Terraform으로 OCR 서비스 환경 구축
 
 <br>
 
-- 먼저 아래의 `테라폼으로 구성한 AWS 구조` 설명을 읽고, 문서를 보는것이 좋습니다.
+먼저 아래의 `테라폼으로 구성한 AWS 구조` 설명을 읽고, 문서를 보는것이 좋습니다.
 
 <br>
 
-[테라폼으로 구성한 AWS 구조 설명](etc/doc/terraform_structure.md)
+- ## [테라폼으로 구성한 AWS 구조 설명](etc/doc/terraform_structure.md)
+
+
+
 
 <br><br><br><br>
 
@@ -210,8 +228,20 @@ aws eks --region us-east-2 update-kubeconfig --name chunjae_ocr --profile defaul
 
 <br><br><br><br><br><br><br><br><br><br>
 
+
+
+
+
+
+
+
+
+
+
+
+
 ----
-## [4. EKS 관리 (선택사항)](#eks-관리-선택사항)
+## 4. EKS 관리 (선택사항)
 
 <br><br>
 
@@ -246,9 +276,37 @@ k9s
 <br><br><br><br>
 
 
------
 
-## 5. Terraform으로 OCR 서비스 삭제
+
+
+
+
+
+-----
+## 5. 쿠버네티스 애플리케이션 설명
+
+<br>
+
+## [EKS 적용된 쿠버네티스 어플리케이션 설명](etc/doc/kubernetes_application.md)
+
+<br><br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----
+## 6. Terraform으로 OCR 서비스 삭제
 
 <br><br>
 
@@ -291,21 +349,6 @@ terraform destroy
 <p align="center"> [ Terraform destroy - 에러 발생 (삭제 타임아웃 에러) ] </p>
 <br><br><br><br><br><br>
 
-
-
-------
-
-https://astrid.tech/2021/02/07/0/grafana-debugging/
-
-https://docs.adeptia.com/display/AC40/Centralized+logging+and+monitoring
-
-https://pro.ideaportriga.com/techlife/what-oracles-dx4c-has-brought-to-siebel-crm-customers
-
-https://www.google.com/imgres?imgurl=https%3A%2F%2Fdocs.vmware.com%2Fen%2FVMware-Tanzu-for-Kubernetes-Operations%2F1.6%2Ftko-reference-architecture%2FImages%2Freference-designs-img-tko-on-aws-tkg-aws-overview.png&tbnid=eurlpvm1iNPvKM&vet=10CEUQMyjXAmoYChMIuIvGhtuP_gIVAAAAAB0AAAAAEMcD..i&imgrefurl=https%3A%2F%2Fdocs.vmware.com%2Fen%2FVMware-Tanzu-for-Kubernetes-Operations%2F1.6%2Ftko-reference-architecture%2FGUID-reference-designs-tko-on-aws.html&docid=s_z1qHWmeEVKtM&w=1548&h=1242&q=kubernetes%20prometheus%20fluntd&ved=0CEUQMyjXAmoYChMIuIvGhtuP_gIVAAAAAB0AAAAAEMcD
-
-
-
-각종 소프트웨어 설정들 설명
 
 
 
