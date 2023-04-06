@@ -4,12 +4,12 @@
 
 ## 목차
 
-### 1. 필요 툴 설치
-### 2. 서비스 인프라 환경
-### 3. Terraform으로 OCR 서비스 환경 구축
-### 4. EKS 관리 (선택사항)
-### 5. 쿠버네티스 애플리케이션 설명
-### 6. Terraform으로 OCR 서비스 삭제
+#### 1. 필요 툴 설치
+#### 2. 서비스 인프라 환경
+#### 3. Terraform으로 OCR 서비스 환경 구축
+#### 4. EKS 관리 (선택사항)
+#### 5. 쿠버네티스 애플리케이션 설명
+#### 6. Terraform으로 OCR 서비스 삭제
 
 <br><br><br><br>
 
@@ -284,7 +284,7 @@ k9s
 
 <br>
 
-## [EKS 적용된 쿠버네티스 어플리케이션 설명](etc/doc/kubernetes_application.md)
+### [EKS 적용된 쿠버네티스 어플리케이션 설명](etc/doc/kubernetes_application.md)
 
 <br><br><br><br>
 
