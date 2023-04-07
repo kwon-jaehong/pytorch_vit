@@ -284,7 +284,7 @@ k9s
 
 <br>
 
-### [EKS 적용된 쿠버네티스 어플리케이션 설명](etc/doc/kubernetes_application.md)
+### [EKS 적용된 쿠버네티스 애플리케이션 설명](etc/doc/kubernetes_application.md)
 
 <br><br><br><br>
 
