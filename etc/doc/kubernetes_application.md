@@ -86,9 +86,19 @@ MSA의 내부 구조라고 생각하면 됩니다. 서비스 정의, DB 구조, 
 
 <br>
 
+
 > 관측 애플리케이션 <br><br>
 >> [컴퓨터 자원 모니터링, 시각화 (프로메테우스 & 그라파나)](prometheus_grafana.md) <br><br>
->> [각 pod들 로그 수집  (fluentd & 엘라스틱 서치 & 키바나)]()  <br><br>
+>> [각 pod들 로그 수집  (fluentd & 엘라스틱 서치 & 키바나)](EFK.md)  <br><br>
+
+
+<p align="center">
+  <img src="../image/Observability.png">
+</p>
+<p align="center"> [ 로깅, 컴퓨터 자원 모니터링 애플리케이션 ] </p>
+<br><br><br><br>
+
+
 
 
 <br>
@@ -121,7 +131,7 @@ MSA의 내부 구조라고 생각하면 됩니다. 서비스 정의, DB 구조, 
 
 
 프로메테우스
-https://astrid.tech/2021/02/07/0/grafana-debugging/
+
 
 
 https://docs.adeptia.com/display/AC40/Centralized+logging+and+monitoring

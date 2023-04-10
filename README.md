@@ -280,11 +280,11 @@ k9s
 
 
 -----
-## 5. 쿠버네티스 애플리케이션 설명
+## 5. 쿠버네티스 설치 애플리케이션 설명
 
 <br>
 
-### [EKS 적용된 쿠버네티스 애플리케이션 설명](etc/doc/kubernetes_application.md)
+### [쿠버네티스(EKS) 설치 애플리케이션 설명](etc/doc/kubernetes_application.md)
 
 <br><br><br><br>
 
