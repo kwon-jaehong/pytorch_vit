@@ -4,11 +4,94 @@ EFK는 로그 수집, 저장, 검색, 분석 및 시각화를 위한 오픈 소�
 
 
 
+<br><br>
 
+현 프로젝트에서는 `엘라스틱 서치, 키바나는 helm`으로, `Fluentd`는 yaml파일로 `직접 설치`하여 애플리케이션 구성을 하였습니다. 설치와 관련된 파일과 코드 부분은 다음과 같습니다. 
+
+
+> `chunjae_project / terraform / install-helm-chart.tf`
+
+
+```
+## 엘라스틱 서치 설치
+resource "helm_release" "elasticsearch" 
+
+.
+.
+.
+.
+
+## 키바나 설치
+resource "helm_release" "kibana"
+
+```
+
+<br><br><br><br>
+
+
+설치는 helm을 이용해서 자동적으로 설치되고, 설치시 필요한 `Helm Value` 파일경로는 다음과 같습니다.
+> `chunjae_project / k8s / helm / elasticsearch-chart-value.yaml`    
+> `chunjae_project / k8s / helm / kibana-chart-value.yaml`
+
+
+<br><br><br><br>
+
+`Fluentd` 설치는 yaml파일을 이용해서 설치 합니다.
+
+> `chunjae_project / terraform / install-yamlfile-kubectl.tf`
+
+
+```
+## 로그 수집기 flunedtd config맵 설정
+resource "kubectl_manifest" "flunedtd_map"
+
+.
+.
+.
+.
+
+## 로그 수집기 flunedtd config맵 배포
+resource "kubectl_manifest" "flunedtd_ds"
+
+```
+<br><br><br><br>
+
+
+실제 `Fluentd`가 설치되는 파일 경로는 다음과 같습니다
+> `chunjae_project / k8s / etc_intsall / flunedtd-ds.yaml`    
+> `chunjae_project / k8s / etc_intsall / flunedtd-map.yaml`
+
+<br><br><br><br>
+
+
+------------
+<br><br>
+
+**꼭, 필요할때만 아래의 절차를 따라 접속을 해 주시길 바랍니다**.( `주소가 노출되면 외부인이 접근하여 취약점이 발생 할 수 있습니다.` )  
+
+
+```
+## 키바나 공개 주소 획득
 kubectl patch svc kibana-kibana -n elasticsearch -p '{"spec": {"type": "LoadBalancer"}}'
-kubectl get svc kibana-kibana -n elasticsearch
 
-닫으려면
+## 공개 주소 확인
+kubectl get svc kibana-kibana -n elasticsearch
+```
+
+<br>
+
+<p align="center">
+  <img src="../image/kibana_1.png">
+</p>
+<p align="center"> [ 키바나 UI ] </p>
+<br><br><br><br>
+
+
+**하고싶은 작업을 마쳤다면, 아래와 같은 명령어로 공개 주소를 닫아 줍니다.**
+
+```
+## 공개 IP를 제거
 kubectl patch svc kibana-kibana -n elasticsearch -p '{"spec": {"type": "ClusterIP"}}'
+```
 
 ---------

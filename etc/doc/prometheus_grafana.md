@@ -19,8 +19,6 @@
 
 > `chunjae_project / terraform / install-helm-chart.tf`
 
-<br>
-
 ```
 ## 프로메테우스 stack 설치 코드
 resource "helm_release" "prometheus_stack"

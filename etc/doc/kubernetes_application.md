@@ -89,7 +89,7 @@ MSA의 내부 구조라고 생각하면 됩니다. 서비스 정의, DB 구조, 
 
 > 관측 애플리케이션 <br><br>
 >> [컴퓨터 자원 모니터링, 시각화 (프로메테우스 & 그라파나)](prometheus_grafana.md) <br><br>
->> [각 pod들 로그 수집  (fluentd & 엘라스틱 서치 & 키바나)](EFK.md)  <br><br>
+>> [ 로그 수집  (fluentd & 엘라스틱 서치 & 키바나)](EFK.md)  <br><br>
 
 
 <p align="center">
@@ -103,11 +103,10 @@ MSA의 내부 구조라고 생각하면 됩니다. 서비스 정의, DB 구조, 
 
 <br>
 
-
-- 쿠버네티스 CA 카펜터
-
-
 뉴런 SDK 디바이스 스케쥴러
+카펜터
+istio
+argocd
 
 
 
