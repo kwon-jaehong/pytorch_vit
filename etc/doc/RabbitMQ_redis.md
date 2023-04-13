@@ -15,10 +15,103 @@ RabbitMQ와 Redis는 모두 분산 메시징 시스템입니다. RabbitMQ는 AMQ
 
 
 
+kubectl patch rabbitmqclusters.rabbitmq.com production-rabbitmqcluster -n messagesys --type='json' -p='[{"op": "replace", "path": "/spec/service/type", "value": "LoadBalancer"}]'
+kubectl get svc production-rabbitmqcluster -n messagesys    
+
+
+kubectl patch rabbitmqclusters.rabbitmq.com production-rabbitmqcluster -n messagesys --type='json' -p='[{"op": "replace", "path": "/spec/service/type", "value": "ClusterIP"}]'
+kubectl get svc production-rabbitmqcluster -n messagesys    
+
+
+
+------------
+
+
+kubectl apply -f ../k8s/etc_intsall/redis-ui.yaml
+
+kubectl get svc redis-commander -n messagesys  
+
+
+kubectl delete -f ../k8s/etc_intsall/redis-ui.yaml
 -------
 
 
-레빗MQ UI
-레디스 UI 사진
-키바나 명령어 사진
-아르고 CD 명령어, 비밀번호 명령어 사진
+
+
+아르고 cd
+
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl get svc argocd-server -n argocd    
+
+
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "ClusterIP"}}'
+kubectl get svc argocd-server -n argocd   
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+kubectl get customresourcedefinition rabbitmqclusters.rabbitmq.com
+
+
+kubectl get rabbitmqclusters.rabbitmq.com production-rabbitmqcluster -n messagesys    
+
+
+kubectl get rabbitmqclusters.rabbitmq.com production-rabbitmqcluster -n messagesys    
+
+
+
+
+kubectl patch rabbitmqclusters.rabbitmq.com production-rabbitmqcluster -n messagesys --type='json' -p='[{"op": "replace", "path": "/spec/service/type", "value": "LoadBalancer"}]'
+kubectl get svc production-rabbitmqcluster -n messagesys    
+
+
+kubectl patch rabbitmqclusters.rabbitmq.com production-rabbitmqcluster -n messagesys --type='json' -p='[{"op": "replace", "path": "/spec/service/type", "value": "ClusterIP"}]'
+kubectl get svc production-rabbitmqcluster -n messagesys    
+
+
+
+------------
+
+
+kubectl apply -f ../k8s/etc_intsall/redis-ui.yaml
+
+kubectl get svc redis-commander -n messagesys  
+
+
+kubectl delete -f ../k8s/etc_intsall/redis-ui.yaml
+
