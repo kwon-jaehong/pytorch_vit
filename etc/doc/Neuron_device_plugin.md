@@ -32,7 +32,7 @@ resource "kubectl_manifest" "neuron_my_scheduler" {
 
 <br><br><br>
 
-실제 AWS 뉴런 디바이스 플러그인이 설치되는 파일 경로는 다음과 같습니다
+실제 AWS 뉴런 디바이스 플러그인이 설치되는 파일 경로는 다음과 같습니다.
 
 > `chunjae_project / k8s / neuron-device-plugin / k8s-neuron-device-plugin-rbac.yaml`   
 > `chunjae_project / k8s / neuron-device-plugin / k8s-neuron-device-plugin.yaml`   
@@ -54,7 +54,7 @@ kubectl get nodes "-o=custom-columns=NAME:.metadata.name,NeuronCore:.status.allo
 
 
 만약, 뉴런 디바이스 플러그인이 작동하지 않는다면 [AWS Neuron SDK 공식문서](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/)에서 
-`[  Deploy Containers with Neuron > kubernetes getting started > deploy neuron device plugin  ]`을 참조하면 된다
+`[  Deploy Containers with Neuron > kubernetes getting started > deploy neuron device plugin  ]`을 참조하면 됩니다.
 
 <br>
 

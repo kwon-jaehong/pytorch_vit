@@ -25,7 +25,7 @@ RabbitMQ와 Redis는 모두 분산 메시징 시스템입니다. RabbitMQ는 AMQ
 
 현 프로젝트에서 RabbitMQ는 `Kubernetes`에서 클러스터로 배포가 가능한  `rabbitmq-cluster-operator` **helm**을 이용하여 애플리케이션 구성을 하였습니다. 설치와 관련된 파일과 코드 부분은 다음과 같습니다
 
-<br><br><br>
+<br>
 
 > `chunjae_project / terraform / install-helm-chart.tf`
 
@@ -47,7 +47,7 @@ resource "helm_release" "rabbitmq-cluster-operator"
 <br><br><br><br><br><br>
 
 
-`rabbitmq-cluster-operator`의 설치가 완료 되면, rabbitmq를 배포합니다. 배포 코드는 아래 파일과 같습니다.
+`rabbitmq-cluster-operator`의 설치 되면, rabbitmq를 배포합니다. 배포 코드는 아래 파일과 같습니다.
 > `chunjae_project / terraform / install-yamlfile-kubectl.tf`    
 
 ```
@@ -60,7 +60,7 @@ data "kubectl_file_documents" "rabbitmq"
 .
 .
 ```
-<br>
+<br><br><br><br><br>
 
 
 rabbitmq 클러스 배포와 직접 관련된 yaml파일의 경로는 다음과 같습니다.
@@ -70,6 +70,7 @@ rabbitmq 클러스 배포와 직접 관련된 yaml파일의 경로는 다음과 
 
 
 
+아래 명령어를 이용하여, **꼭, 필요할때만 아래의 절차를 따라 UI로 접속을 해 주시길 바랍니다**.( `주소가 노출되면 외부인이 접근하여 취약점이 발생 할 수 있습니다.` )  
 
 ```
 ## RabbitMQ UI를 LoadBalancer타입으로 변경 = IP 노출
@@ -134,7 +135,7 @@ kubectl get svc production-rabbitmqcluster -n messagesys
 
 현 프로젝트에서 redis는 `redis` **helm**을 이용하여 애플리케이션 구성을 하였습니다. 설치와 관련된 파일과 코드 부분은 다음과 같습니다
 
-<br><br><br>
+<br>
 
 > `chunjae_project / terraform / install-helm-chart.tf`
 
@@ -147,12 +148,12 @@ resource "helm_release" "redis"
 .
 .
 ```
-<br><br>
+<br>
 
 설치시 필요한 `Helm Value` 파일을 다음과 같습니다.
 > `chunjae_project / k8s / helm / redis-chart-value.yaml`    
 
-<br><br><br><br><br><br>
+<br><br><br><br><br>
 
 
 
@@ -165,7 +166,7 @@ kubectl apply -f chunjae_project/k8s/etc_intsall/redis-ui.yaml
 kubectl get svc redis-commander -n messagesys  
 ```
 
-<br><br>
+<br>
 
 <p align="center">
   <img src="../image/redis_ui1.png">

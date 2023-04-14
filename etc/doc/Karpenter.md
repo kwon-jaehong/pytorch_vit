@@ -8,20 +8,19 @@ Karpenter를 사용하면 Kubernetes 클러스터에서 Pod를 실행할 수 있
 
 Karpenter는 다양한 클라우드 환경에서 사용할 수 있으며, 이를 통해 Kubernetes 클러스터를 더욱 효율적으로 관리할 수 있습니다. Karpenter는 Kubernetes와 완전히 호환되며, Kubernetes의 API와 리소스 모델을 사용하여 노드를 자동으로 관리합니다. 따라서 Karpenter를 사용하여 Kubernetes 클러스터의 성능을 향상시키고 비용을 절감할 수 있습니다.
 
-<br><br><br>
+<br><br><br><br>
 
 
 **Karpenter 설치와 관련된 파일과 코드 부분은 아래와 같습니다.**   
-<br><br>
 
-EKS에서 카펜터가 자원을 컨트롤 할 수 있도록 iam에 역할 등록
+( EKS에서 카펜터가 자원을 컨트롤 할 수 있도록 iam에 역할 등록 )
 > `chunjae_project / terraform / karpenter-controller-role.tf`   
 > `chunjae_project / terraform / controller-trust-policy.json`   
 
 <br><br>
 
 
-쿠버네티스에 카펜터 helm으로 설치
+쿠버네티스에 카펜터 helm 설치
 > `chunjae_project / terraform / install-helm-chart.tf`
 ```
 ## 쿠버네티스에 카펜터 helm 설치

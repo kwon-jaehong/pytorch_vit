@@ -86,8 +86,25 @@ MSA의 내부 구조라고 생각하면 됩니다. 서비스 정의, DB 구조, 
 
 <br>
 
+>  메세지, DB 애플리케이션 <br>
+>> [ RabbitMQ 및 Redis ](RabbitMQ_redis.md) <br><br>
 
-> 관측 애플리케이션 <br><br>
+<br><br>
+
+
+>  쿠버네티스 애플리케이션 & 서비스 배포관리 <br>
+>> [ ArgoCD ](argocd.md) <br><br>
+
+<br><br>
+
+
+>  서비스 매쉬 <br>
+>> [ Istio ](istio.md) <br><br>
+
+
+<br><br>
+
+> 관측 애플리케이션 <br>
 >> [컴퓨터 자원 모니터링, 시각화 (프로메테우스 & 그라파나)](prometheus_grafana.md) <br><br>
 >> [EKF - 로그 수집  (fluentd & 엘라스틱 서치 & 키바나)](EFK.md)  <br><br>
 
@@ -99,19 +116,21 @@ MSA의 내부 구조라고 생각하면 됩니다. 서비스 정의, DB 구조, 
 <br><br><br><br><br><br>
 
 
->  메세지, DB 애플리케이션 <br><br>
->> [ RabbitMQ 및 Redis ](RabbitMQ_redis.md) <br><br>
 
-<br><br>
 
-> 기타 애플리케이션 <br><br>
+> 기타 애플리케이션 <br>
 >> [AWS 뉴런 장비 플러그인](Neuron_device_plugin.md) <br><br>
 >> [Karpenter - 클러스터 오토 스케일링 ](Karpenter.md) <br><br>
 
 <br>
 
-istio
-argocd
+
+
+
+
+
+
+argocd 닫는거
 
 
 
